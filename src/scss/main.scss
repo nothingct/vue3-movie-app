@@ -1,0 +1,17 @@
+
+// Default variable overrides
+$primary : #FDC000;
+//contatiner customizing
+$container-max-widths: (
+  sm: 540px,
+  md: 704px,
+  lg: 924px,
+  xl: 1140px,
+  xxl: 1364px
+);
+// Required
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+//반드시! customizing 과 관련된 설정이 끝나고 나서 bootstrap 기본 설정을 가져와야 한다. 
+@import "../../node_modules/bootstrap/scss/bootstrap";
