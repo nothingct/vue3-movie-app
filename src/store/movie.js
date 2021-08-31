@@ -46,6 +46,8 @@ export default{
          })
          const total = parseInt(totalResults, 10)
          const pageLength = Math.ceil(total / 10)
+         
+         //추가 요청!
          if (pageLength > 1) {
            for (let page = 2; page <= pageLength; page++) {
              if (page > (payload.number / 10)) break
@@ -64,7 +66,7 @@ export default{
              })
            }
          }
-      }catch(message){
+      }catch({message}){
         commit('updateState',{
           movies:[],
           message
@@ -87,7 +89,6 @@ export default{
           theMovie:res.data
         })
       }catch(error){
-        (error)
         commit('updateState',{
           theMovie:{}
         })
@@ -100,25 +101,6 @@ export default{
   }
 }
 
-function _fetchMovie(payload){
-  const { title, type, year, page, id } = payload
-  const OMDB_API_KEY = '7035c60c'
-  const url = id
-  ? `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}`
-  : `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}&page=${page}`
-  // const url = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}`
-// 잘못된 요청에 대하여 catch 에서 실행되기를 기대하였는데 해당 url 서버에서 잘못된 요청도 올바른 요청으로 인식하고 
-//해당 서버만의 로직으로 동작하는 , 즉 정상 응답 (status :200) 인 경우 -> 개발자가 직접 예외처리를 명시해주어야 한다. 
-  return new Promise( (resolve,reject) =>{
-    axios.get(url)
-      .then(res=>{
-        if ( res.data.Error){
-          reject(res.data.Error)
-        }
-        resolve(res)
-      })
-      .catch(err=>{
-        reject(err.message)
-      })
-  })
+async function _fetchMovie(payload){
+  return await axios.post('/.netlify/functions/movie',payload)
 }
