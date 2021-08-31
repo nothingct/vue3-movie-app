@@ -1,12 +1,11 @@
 //serverless 함수 : node.js 환경에서 동작한다. 
 //serverless 함수 안에서는 , 우리의 프로젝트에서 설치한 라이브러리를 그대로 사용핤 ㅜㅇ 씨다. 
 const axios = require('axios')
-
+const {OMDB_API_KEY} = process.env
 exports.handler = async function(event){
     console.log(event)
     const payload = JSON.parse(event.body)
     const {title,type,year,page,id} = payload
-    const OMDB_API_KEY = '7035c60c'
     const url = id 
       ?`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}` 
       :`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}&page=${page}`
